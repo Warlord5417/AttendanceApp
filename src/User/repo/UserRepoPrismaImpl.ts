@@ -3,6 +3,7 @@ import { UserData } from "../models/User";
 import { User } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 import { UserAlreadyExistsError } from "../errors/UserAlreadyExistsError";
+import { UserDoesNotExistError } from "../errors/UserDoesNotExistError";
 
 export class UserRepoPrismaImpl implements UserRepo{
 
@@ -31,8 +32,11 @@ export class UserRepoPrismaImpl implements UserRepo{
         return createdUser
     }
 
-    findById(id: string): Promise<User> {
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<User> {
+        if(!await this.existById(id)) 
+            throw new UserDoesNotExistError(`User with id '${id}' does not exist`)
+        const foundUser: User = await this.prismaClient.user.findUniqueOrThrow({ where: { id }})
+        return foundUser;
     }
 
     findByUsername(username: string): Promise<User> {
