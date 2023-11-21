@@ -60,8 +60,10 @@ export class UserRepoPrismaImpl implements UserRepo{
         return updatedUser
     }
 
-    updatePassword(password: string, id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async updatePassword(password: string, id: string): Promise<void> {
+        if(!await this.existById(id))
+            throw new UserDoesNotExistError(`User with id '${id}' does not exist`)
+        await this.prismaClient.user.update({ data: { password }, where: { id }})
     }
 
     updateFirstname(firstname: string, id: string): Promise<User> {
