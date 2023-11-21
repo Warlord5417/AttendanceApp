@@ -46,8 +46,9 @@ export class UserRepoPrismaImpl implements UserRepo{
         return foundUser
     }
 
-    findAll(): Promise<User[]> {
-        throw new Error("Method not implemented.");
+    async findAll(): Promise<User[]> {
+        const users: User[] = await this.prismaClient.user.findMany()
+        return users
     }
 
     updateUsername(username: string, id: string): Promise<User> {
