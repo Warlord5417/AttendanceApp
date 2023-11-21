@@ -91,8 +91,10 @@ export class UserRepoPrismaImpl implements UserRepo{
         throw new Error("Method not implemented.");
     }
 
-    deleteById(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async deleteById(id: string): Promise<void> {
+        if(!await this.existById(id))
+            throw new UserDoesNotExistError(`User with id '${id}' does not exist`)
+        await this.prismaClient.user.delete({ where: { id }})
     }
 
 }
