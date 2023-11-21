@@ -39,8 +39,11 @@ export class UserRepoPrismaImpl implements UserRepo{
         return foundUser;
     }
 
-    findByUsername(username: string): Promise<User> {
-        throw new Error("Method not implemented.");
+    async findByUsername(username: string): Promise<User> {
+        if(!await this.existByUsername(username))
+            throw new UserDoesNotExistError(`${username} does not exist`)
+        const foundUser: User = await this.prismaClient.user.findUniqueOrThrow({ where: { username }})
+        return foundUser
     }
 
     findAll(): Promise<User[]> {
