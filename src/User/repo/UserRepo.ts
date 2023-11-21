@@ -4,7 +4,7 @@ import { UserData } from "../models/User";
 export interface UserRepo{
 
     existById(id: string): Promise<boolean>
-    existByUsername(id: string): Promise<boolean>
+    existByUsername(username: string): Promise<boolean>
     create(data: UserData): Promise<User>
     findById(id: string): Promise<User>
     findByUsername(username: string): Promise<User>

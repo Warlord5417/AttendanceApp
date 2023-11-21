@@ -2,6 +2,7 @@ import { UserRepo } from "./UserRepo";
 import { UserData } from "../models/User";
 import { User } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
+import { UserAlreadyExistsError } from "../errors/UserAlreadyExistsError";
 
 export class UserRepoPrismaImpl implements UserRepo{
 
@@ -11,16 +12,23 @@ export class UserRepoPrismaImpl implements UserRepo{
         this.prismaClient = prismaClient;
     }
 
-    existById(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async existById(id: string): Promise<boolean> {
+        const existingUser: User | null = await this.prismaClient.user.findUnique({ where: { id }})
+        if(!existingUser) return false
+        return true
     }
 
-    existByUsername(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async existByUsername(username: string): Promise<boolean> {
+        const existingUser: User | null = await this.prismaClient.user.findUnique({ where: { username}})
+        if(!existingUser) return false
+        return true
     }
 
-    create(data: UserData): Promise<User> {
-        throw new Error("Method not implemented.");
+    async create(data: UserData): Promise<User> {
+        if(await this.existByUsername(data.username)) 
+            throw new UserAlreadyExistsError(`${data.username} already exists`)
+        const createdUser: User = await this.prismaClient.user.create({ data })
+        return createdUser
     }
 
     findById(id: string): Promise<User> {
