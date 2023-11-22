@@ -19,6 +19,7 @@ roleRoute.post('/create', async (c: Context) => {
     try{
         const requestBody = await c.req.json()
         const role = await service.createRole(requestBody)
+        c.status(201)
         return c.json(role)
     }
     catch(err){
