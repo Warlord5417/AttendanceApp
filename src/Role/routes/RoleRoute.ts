@@ -26,6 +26,7 @@ roleRoute.post('/create', async (c: Context) => {
             c.status(400)
             return c.json({ message: err.message })
         }
+        console.error(err)
         c.status(500)
         return c.json({ message: 'Server Error'})
     }
