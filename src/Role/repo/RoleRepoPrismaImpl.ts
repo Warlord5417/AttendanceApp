@@ -1,9 +1,15 @@
 import { RoleRepo } from "./RoleRepo";
 import { RoleData } from "../models/Role";
-import { Role } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 
 export class RoleRepoPrismaImpl implements RoleRepo{
 
+    private prismaClient: PrismaClient
+
+    constructor(prismaClient: PrismaClient){
+        this.prismaClient = prismaClient
+    }
+    
     existById(id: string): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
