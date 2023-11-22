@@ -11,31 +11,31 @@ export class RoleServiceImpl implements RoleService{
         this.roleRepository = roleRepository
     }
 
-    async createRole(data: RoleData): Promise<{ id: string; role: string; description: string; }> {
+    async createRole(data: RoleData): Promise<Role> {
         throw new Error("Method not implemented.");
     }
 
-    async findRoleById(id: string): Promise<{ id: string; role: string; description: string; }> {
+    async findRoleById(id: string): Promise<Role> {
         throw new Error("Method not implemented.");
     }
 
-    async findRoleByRole(role: string): Promise<{ id: string; role: string; description: string; }> {
+    async findRoleByRole(role: string): Promise<Role> {
         throw new Error("Method not implemented.");
     }
 
-    async findAllRoles(): Promise<{ id: string; role: string; description: string; }[]> {
+    async findAllRoles(): Promise<Role[]> {
         throw new Error("Method not implemented.");
     }
 
-    async updateRole(role: string): Promise<{ id: string; role: string; description: string; }> {
+    async updateRole(role: string): Promise<Role> {
         throw new Error("Method not implemented.");
     }
 
-    async updateDesc(description: string): Promise<{ id: string; role: string; description: string; }> {
+    async updateDesc(description: string): Promise<Role> {
         throw new Error("Method not implemented.");
     }
 
-    async deleteRoleById(id: string): Promise<{ id: string; role: string; description: string; }> {
+    async deleteRoleById(id: string): Promise<Role> {
         throw new Error("Method not implemented.");
     }
 
