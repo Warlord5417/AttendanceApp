@@ -57,8 +57,11 @@ export class RoleRepoPrismaImpl implements RoleRepo{
         return updatedRole
     }
 
-    updateDesc(description: string, id: string): Promise<Role> {
-        throw new Error("Method not implemented.");
+    async updateDesc(description: string, id: string): Promise<Role> {
+        if(!await this.existById(id))
+            throw new RoleDoesNotExistError(`Role with id '${id}' does not exist`)
+        const updatedRole = await this.prismaClient.role.update({ data: { description }, where: { id }})
+        return updatedRole
     }
     
     deleteById(id: string): Promise<void> {
