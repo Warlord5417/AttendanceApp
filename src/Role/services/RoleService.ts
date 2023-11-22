@@ -6,7 +6,7 @@ export interface RoleService{
     findRoleById(id: string): Promise<Role>
     findRoleByRole(role: string): Promise<Role>
     findAllRoles(): Promise<Role[]>
-    updateRole(role: string): Promise<Role>
-    updateDesc(description: string): Promise<Role>
-    deleteRoleById(id: string): Promise<Role>
+    updateRole(role: string, id: string): Promise<Role>
+    updateDesc(description: string, id: string): Promise<Role>
+    deleteRoleById(id: string): Promise<void>
 }
