@@ -4,6 +4,7 @@ import { RoleServiceImpl } from "../services/RoleServiceImpl";
 import { RoleController } from "./RoleController";
 import { Context } from "hono";
 import { RoleAlreadyExistsError } from "../error/RoleAlreadyExistsError";
+import { invalidJSONRequestBodyFilter } from "./middlewares/invalidJSONReqeustBodyFilter";
 
 export const roleRoute = new RoleController(
     new RoleServiceImpl(
@@ -15,7 +16,7 @@ export const roleRoute = new RoleController(
 
 const service = roleRoute.getService()
 
-roleRoute.post('/create', async (c: Context) => {
+roleRoute.post('/create', invalidJSONRequestBodyFilter, async (c: Context) => {
     try{
         const requestBody = await c.req.json()
         const role = await service.createRole(requestBody)

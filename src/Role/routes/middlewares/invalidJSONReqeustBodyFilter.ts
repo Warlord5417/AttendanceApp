@@ -1,6 +1,6 @@
 import { Context } from "hono";
 
-export async function invalidJSONRequestBody(c: Context, next: Function){
+export async function invalidJSONRequestBodyFilter(c: Context, next: Function){
     try{
         await c.req.json()
         await next()
