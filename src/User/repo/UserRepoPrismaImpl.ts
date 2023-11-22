@@ -4,13 +4,17 @@ import { User } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 import { UserAlreadyExistsError } from "../errors/UserAlreadyExistsError";
 import { UserDoesNotExistError } from "../errors/UserDoesNotExistError";
+import { RoleRepo } from "../../Role/repo/RoleRepo";
+import { RoleDoesNotExistError } from "../../Role/error/RoleDoesNotExistError";
 
 export class UserRepoPrismaImpl implements UserRepo{
 
     private prismaClient: PrismaClient
+    private roleRepository: RoleRepo
 
-    constructor(prismaClient: PrismaClient){
+    constructor(prismaClient: PrismaClient, roleRepository: RoleRepo){
         this.prismaClient = prismaClient;
+        this.roleRepository = roleRepository;
     }
 
     async existById(id: string): Promise<boolean> {
@@ -28,6 +32,8 @@ export class UserRepoPrismaImpl implements UserRepo{
     async create(data: UserData): Promise<User> {
         if(await this.existByUsername(data.username)) 
             throw new UserAlreadyExistsError(`${data.username} already exists`)
+        if(!await this.roleRepository.existById(data.roleId))
+            throw new RoleDoesNotExistError(`Role with id '${data.roleId}' deos not exist`)
         const createdUser: User = await this.prismaClient.user.create({ data })
         return createdUser
     }
