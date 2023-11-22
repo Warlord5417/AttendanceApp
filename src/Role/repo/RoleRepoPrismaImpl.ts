@@ -38,8 +38,11 @@ export class RoleRepoPrismaImpl implements RoleRepo{
         return role
     }
 
-    findByRole(role: string): Promise<Role> {
-        throw new Error("Method not implemented.");
+    async findByRole(role: string): Promise<Role> {
+        if(!await this.existByRole(role))
+            throw new RoleDoesNotExistError(`${role} does not exist`)
+        const roleFound = await this.prismaClient.role.findUniqueOrThrow({ where : { role }})
+        return roleFound
     }
 
     findAll(): Promise<Role[]> {
