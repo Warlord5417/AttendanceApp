@@ -64,8 +64,10 @@ export class RoleRepoPrismaImpl implements RoleRepo{
         return updatedRole
     }
     
-    deleteById(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async deleteById(id: string): Promise<void> {
+        if(! await this.existById(id))
+            throw new RoleDoesNotExistError(`Role with id '${id}' does not exist`)
+        await this.prismaClient.role.delete({ where: { id }})
     }
 
 }
