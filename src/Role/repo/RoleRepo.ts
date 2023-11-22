@@ -7,9 +7,9 @@ export interface RoleRepo{
     existByRole(id: string): Promise<boolean>
     create(data: RoleData): Promise<Role>
     findById(id: string): Promise<Role>
-    findByName(role: string): Promise<Role>
+    findByRole(role: string): Promise<Role>
     findAll(): Promise<Role[]>
-    updateRoleName(role: string, id: string): Promise<Role>
+    updateRole(role: string, id: string): Promise<Role>
     updateDesc(description: string, id: string): Promise<Role>
     deleteById(id: string): Promise<void>
 
