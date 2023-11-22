@@ -96,6 +96,8 @@ export class UserRepoPrismaImpl implements UserRepo{
     async updateRoleId(roleId: string, id: string): Promise<User> {
         if(!await this.existById(id))
             throw new UserDoesNotExistError(`User with id '${id}' does not exist`)
+        if(!await this.roleRepository.existById(roleId))
+            throw new RoleDoesNotExistError(`Role with id '${roleId}' does not exist`)
         const updatedUser: User = await this.prismaClient.user.update({ data: { roleId }, where: { id }})
         return updatedUser
     }
