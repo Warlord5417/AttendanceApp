@@ -4,7 +4,7 @@ import { RoleServiceImpl } from "../services/RoleServiceImpl";
 import { RoleController } from "./RoleController";
 import { Context } from "hono";
 import { RoleAlreadyExistsError } from "../error/RoleAlreadyExistsError";
-import { invalidJSONRequestBodyFilter } from "../../middleware/invalidJSONReqeustBodyFilter";
+import { invalidJSONRequestBodyFilter } from "../../middleware/invalidJSONRequestBodyFilter";
 import { invalidRoleDataRequestBodyFilter } from "./middlewares/invalidRoleDataRequestBodyFilter";
 
 export const roleRoute = new RoleController(
