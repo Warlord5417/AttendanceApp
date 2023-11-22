@@ -45,8 +45,9 @@ export class RoleRepoPrismaImpl implements RoleRepo{
         return roleFound
     }
 
-    findAll(): Promise<Role[]> {
-        throw new Error("Method not implemented.");
+    async findAll(): Promise<Role[]> {
+        const roles = await this.prismaClient.role.findMany()
+        return roles
     }
 
     updateRole(role: string, id: string): Promise<Role> {
