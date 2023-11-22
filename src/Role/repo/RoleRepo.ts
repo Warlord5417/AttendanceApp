@@ -4,7 +4,7 @@ import { RoleData } from "../models/Role"
 export interface RoleRepo{
 
     existById(id: string): Promise<boolean>
-    existByRole(id: string): Promise<boolean>
+    existByRole(role: string): Promise<boolean>
     create(data: RoleData): Promise<Role>
     findById(id: string): Promise<Role>
     findByRole(role: string): Promise<Role>

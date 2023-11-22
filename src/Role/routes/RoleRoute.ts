@@ -3,7 +3,7 @@ import { RoleRepoPrismaImpl } from "../repo/RoleRepoPrismaImpl";
 import { RoleServiceImpl } from "../services/RoleServiceImpl";
 import { RoleController } from "./RoleController";
 import { Context } from "hono";
-import { RoleDoesNotExistError } from "../error/RoleDoesNotExistError";
+import { RoleAlreadyExistsError } from "../error/RoleAlreadyExistsError";
 
 export const roleRoute = new RoleController(
     new RoleServiceImpl(
@@ -23,7 +23,7 @@ roleRoute.post('/create', async (c: Context) => {
         return c.json(role)
     }
     catch(err){
-        if(err instanceof RoleDoesNotExistError){
+        if(err instanceof RoleAlreadyExistsError){
             c.status(400)
             return c.json({ message: err.message })
         }

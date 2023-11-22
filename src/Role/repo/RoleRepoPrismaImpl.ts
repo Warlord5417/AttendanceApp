@@ -18,15 +18,14 @@ export class RoleRepoPrismaImpl implements RoleRepo{
         return true
     }
 
-    async existByRole(id: string): Promise<boolean> {
-        const existingRole = await this.prismaClient.role.findUnique({ where: { id }})
+    async existByRole(role: string): Promise<boolean> {
+        const existingRole = await this.prismaClient.role.findUnique({ where: { role }})
         if(!existingRole) return false
         return true
     }
     
     async create(data: RoleData): Promise<Role> {
-        if(await this.existByRole(data.role))
-            throw new RoleAlreadyExistsError(`${data.role} already exists`)
+        if(await this.existByRole(data.role)) throw new RoleAlreadyExistsError(`${data.role} already exists`)
         const role = await this.prismaClient.role.create({ data })
         return role
     }
