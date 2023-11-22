@@ -9,13 +9,17 @@ export class RoleRepoPrismaImpl implements RoleRepo{
     constructor(prismaClient: PrismaClient){
         this.prismaClient = prismaClient
     }
-    
-    existById(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+
+    async existById(id: string): Promise<boolean> {
+        const existingRole = await this.prismaClient.role.findUnique({ where: { id }})
+        if(!existingRole) return false
+        return true
     }
 
-    existByRole(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async existByRole(id: string): Promise<boolean> {
+        const existingRole = await this.prismaClient.role.findUnique({ where: { id }})
+        if(!existingRole) return false
+        return true
     }
     create(data: RoleData): Promise<Role> {
         throw new Error("Method not implemented.");
