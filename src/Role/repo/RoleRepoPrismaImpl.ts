@@ -1,6 +1,7 @@
 import { RoleRepo } from "./RoleRepo";
 import { RoleData } from "../models/Role";
 import { PrismaClient, Role } from "@prisma/client";
+import { RoleAlreadyExistsError } from "../error/RoleAlreadyExistsError";
 
 export class RoleRepoPrismaImpl implements RoleRepo{
 
@@ -22,8 +23,11 @@ export class RoleRepoPrismaImpl implements RoleRepo{
         return true
     }
     
-    create(data: RoleData): Promise<Role> {
-        throw new Error("Method not implemented.");
+    async create(data: RoleData): Promise<Role> {
+        if(!await this.existByRole(data.role))
+            throw new RoleAlreadyExistsError(`${data.role} already exists`)
+        const role = await this.prismaClient.role.create({ data })
+        return role
     }
 
     findById(id: string): Promise<Role> {
