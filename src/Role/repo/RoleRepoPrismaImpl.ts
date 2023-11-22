@@ -21,6 +21,7 @@ export class RoleRepoPrismaImpl implements RoleRepo{
         if(!existingRole) return false
         return true
     }
+    
     create(data: RoleData): Promise<Role> {
         throw new Error("Method not implemented.");
     }
